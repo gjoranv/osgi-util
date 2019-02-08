@@ -1,8 +1,10 @@
 #!/bin/bash
 
 if [ $# -ne 3 ]; then
+    echo "Usage: $(basename $0) rootdir searchstring header"
     echo "Finds all jars under 'rootdir' and searches their manifests for 'searchstring' in the given 'header'."
-    echo "Example usage: $(basename $0) my/root/dir org.apache.http Import-Package"
+    echo
+    echo "Example: $(basename $0) my/root/dir org.apache.http Import-Package"
     exit 1
 fi
 

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [ $# -ne 3 ]; then
+    echo "Finds all jars under 'rootdir' and searches their manifests for 'searchstring' in the given 'header'."
+    echo "Example usage: $(basename $0) my/root/dir org.apache.http Import-Package"
+    exit 1
+fi
+
+ROOTDIR=$1
+SEARCH=$2
+HEADER=$3
+echo "Searching jars in $ROOTDIR for $SEARCH in header $HEADER"
+
+matches=""
+for jar in `find $ROOTDIR -name "*.jar"`; do
+    echo ------------- ${jar#"$ROOTDIR/"} -------------
+    bnd select -h $HEADER $jar | grep $SEARCH && matches=$(printf "$matches\n$jar")
+done
+
+printf '\n%s' "Jars matching '$SEARCH' in '$HEADER':"
+printf '%s\n' "$matches"

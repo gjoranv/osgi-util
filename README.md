@@ -1,4 +1,5 @@
 # osgi-util
 Utilities for working with OSGi and bundle jars.
 
-Requires bnd to be installed. On mac, run `brew install bnd`
+## Prerequisites
+Requires bnd. On mac, run `brew install bnd`

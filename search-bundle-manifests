@@ -16,10 +16,16 @@ ROOTDIR="."
 echo "Searching jars with path matching $PATHSTRING for '$SEARCH' in header $HEADER"
 
 matches=""
+cnt=0
+match_cnt=0
 for jar in `find $ROOTDIR -name "*.jar" | grep $PATHSTRING`; do
+    ((cnt++))
     echo --- ${jar#"$ROOTDIR/"} ---
-    bnd select -h $HEADER $jar | grep $SEARCH && matches=$(printf "$matches\n$jar")
+    bnd select -h $HEADER $jar | grep $SEARCH && matches=$(printf "$matches\n$jar") && ((match_cnt++))
 done
 
+sorted=$(echo $matches | xargs -n1 | sort | xargs | tr ' ' '\n')
+
+printf '\n%s' "Searched $cnt bundles and found $match_cnt matches"
 printf '\n%s' "Jars matching '$SEARCH' in '$HEADER':"
-printf '%s\n' "$matches"
+printf '\n%s\n' "$sorted"
